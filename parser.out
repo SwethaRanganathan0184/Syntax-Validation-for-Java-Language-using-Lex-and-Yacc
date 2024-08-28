@@ -1,0 +1,596 @@
+Created by PLY version 3.11 (http://www.dabeaz.com/ply)
+
+Unused terminals:
+
+    ELSE
+
+Grammar
+
+Rule 0     S' -> if_statement
+Rule 1     if_statement -> IF LPAREN expression RPAREN LBRACE statement_list RBRACE
+Rule 2     statement_list -> statement statement_list
+Rule 3     statement_list -> statement
+Rule 4     statement -> IDENTIFIER ASSIGN expression SEMI
+Rule 5     statement -> IDENTIFIER assignment_operators SEMI
+Rule 6     statement -> type IDENTIFIER SEMI
+Rule 7     statement -> self_assignment_expression SEMI
+Rule 8     expression -> INT_LITERAL
+Rule 9     expression -> IDENTIFIER operator INT_LITERAL
+Rule 10    expression -> IDENTIFIER conditional_operators INT_LITERAL
+Rule 11    expression -> self_assignment_expression
+Rule 12    operator -> PLUS
+Rule 13    operator -> MINUS
+Rule 14    operator -> DIV
+Rule 15    operator -> MUL
+Rule 16    conditional_operators -> LT
+Rule 17    conditional_operators -> GT
+Rule 18    conditional_operators -> ASSIGN ASSIGN
+Rule 19    conditional_operators -> LT ASSIGN
+Rule 20    conditional_operators -> GT ASSIGN
+Rule 21    self_assignment_expression -> IDENTIFIER inc_dec_operators
+Rule 22    self_assignment_expression -> IDENTIFIER assignment_operators INT_LITERAL
+Rule 23    inc_dec_operators -> PLUS PLUS
+Rule 24    inc_dec_operators -> MINUS MINUS
+Rule 25    assignment_operators -> PLUS ASSIGN
+Rule 26    assignment_operators -> MINUS ASSIGN
+Rule 27    assignment_operators -> DIV ASSIGN
+Rule 28    assignment_operators -> MUL ASSIGN
+Rule 29    type -> INT
+Rule 30    type -> FLOAT
+
+Terminals, with rules where they appear
+
+ASSIGN               : 4 18 18 19 20 25 26 27 28
+DIV                  : 14 27
+ELSE                 : 
+FLOAT                : 30
+GT                   : 17 20
+IDENTIFIER           : 4 5 6 9 10 21 22
+IF                   : 1
+INT                  : 29
+INT_LITERAL          : 8 9 10 22
+LBRACE               : 1
+LPAREN               : 1
+LT                   : 16 19
+MINUS                : 13 24 24 26
+MUL                  : 15 28
+PLUS                 : 12 23 23 25
+RBRACE               : 1
+RPAREN               : 1
+SEMI                 : 4 5 6 7
+error                : 
+
+Nonterminals, with rules where they appear
+
+assignment_operators : 5 22
+conditional_operators : 10
+expression           : 1 4
+if_statement         : 0
+inc_dec_operators    : 21
+operator             : 9
+self_assignment_expression : 7 11
+statement            : 2 3
+statement_list       : 1 2
+type                 : 6
+
+Parsing method: LALR
+
+state 0
+
+    (0) S' -> . if_statement
+    (1) if_statement -> . IF LPAREN expression RPAREN LBRACE statement_list RBRACE
+
+    IF              shift and go to state 2
+
+    if_statement                   shift and go to state 1
+
+state 1
+
+    (0) S' -> if_statement .
+
+
+
+state 2
+
+    (1) if_statement -> IF . LPAREN expression RPAREN LBRACE statement_list RBRACE
+
+    LPAREN          shift and go to state 3
+
+
+state 3
+
+    (1) if_statement -> IF LPAREN . expression RPAREN LBRACE statement_list RBRACE
+    (8) expression -> . INT_LITERAL
+    (9) expression -> . IDENTIFIER operator INT_LITERAL
+    (10) expression -> . IDENTIFIER conditional_operators INT_LITERAL
+    (11) expression -> . self_assignment_expression
+    (21) self_assignment_expression -> . IDENTIFIER inc_dec_operators
+    (22) self_assignment_expression -> . IDENTIFIER assignment_operators INT_LITERAL
+
+    INT_LITERAL     shift and go to state 5
+    IDENTIFIER      shift and go to state 6
+
+    expression                     shift and go to state 4
+    self_assignment_expression     shift and go to state 7
+
+state 4
+
+    (1) if_statement -> IF LPAREN expression . RPAREN LBRACE statement_list RBRACE
+
+    RPAREN          shift and go to state 8
+
+
+state 5
+
+    (8) expression -> INT_LITERAL .
+
+    RPAREN          reduce using rule 8 (expression -> INT_LITERAL .)
+    SEMI            reduce using rule 8 (expression -> INT_LITERAL .)
+
+
+state 6
+
+    (9) expression -> IDENTIFIER . operator INT_LITERAL
+    (10) expression -> IDENTIFIER . conditional_operators INT_LITERAL
+    (21) self_assignment_expression -> IDENTIFIER . inc_dec_operators
+    (22) self_assignment_expression -> IDENTIFIER . assignment_operators INT_LITERAL
+    (12) operator -> . PLUS
+    (13) operator -> . MINUS
+    (14) operator -> . DIV
+    (15) operator -> . MUL
+    (16) conditional_operators -> . LT
+    (17) conditional_operators -> . GT
+    (18) conditional_operators -> . ASSIGN ASSIGN
+    (19) conditional_operators -> . LT ASSIGN
+    (20) conditional_operators -> . GT ASSIGN
+    (23) inc_dec_operators -> . PLUS PLUS
+    (24) inc_dec_operators -> . MINUS MINUS
+    (25) assignment_operators -> . PLUS ASSIGN
+    (26) assignment_operators -> . MINUS ASSIGN
+    (27) assignment_operators -> . DIV ASSIGN
+    (28) assignment_operators -> . MUL ASSIGN
+
+    PLUS            shift and go to state 13
+    MINUS           shift and go to state 14
+    DIV             shift and go to state 15
+    MUL             shift and go to state 16
+    LT              shift and go to state 17
+    GT              shift and go to state 18
+    ASSIGN          shift and go to state 19
+
+    operator                       shift and go to state 9
+    conditional_operators          shift and go to state 10
+    inc_dec_operators              shift and go to state 11
+    assignment_operators           shift and go to state 12
+
+state 7
+
+    (11) expression -> self_assignment_expression .
+
+    RPAREN          reduce using rule 11 (expression -> self_assignment_expression .)
+    SEMI            reduce using rule 11 (expression -> self_assignment_expression .)
+
+
+state 8
+
+    (1) if_statement -> IF LPAREN expression RPAREN . LBRACE statement_list RBRACE
+
+    LBRACE          shift and go to state 20
+
+
+state 9
+
+    (9) expression -> IDENTIFIER operator . INT_LITERAL
+
+    INT_LITERAL     shift and go to state 21
+
+
+state 10
+
+    (10) expression -> IDENTIFIER conditional_operators . INT_LITERAL
+
+    INT_LITERAL     shift and go to state 22
+
+
+state 11
+
+    (21) self_assignment_expression -> IDENTIFIER inc_dec_operators .
+
+    RPAREN          reduce using rule 21 (self_assignment_expression -> IDENTIFIER inc_dec_operators .)
+    SEMI            reduce using rule 21 (self_assignment_expression -> IDENTIFIER inc_dec_operators .)
+
+
+state 12
+
+    (22) self_assignment_expression -> IDENTIFIER assignment_operators . INT_LITERAL
+
+    INT_LITERAL     shift and go to state 23
+
+
+state 13
+
+    (12) operator -> PLUS .
+    (23) inc_dec_operators -> PLUS . PLUS
+    (25) assignment_operators -> PLUS . ASSIGN
+
+    INT_LITERAL     reduce using rule 12 (operator -> PLUS .)
+    PLUS            shift and go to state 24
+    ASSIGN          shift and go to state 25
+
+
+state 14
+
+    (13) operator -> MINUS .
+    (24) inc_dec_operators -> MINUS . MINUS
+    (26) assignment_operators -> MINUS . ASSIGN
+
+    INT_LITERAL     reduce using rule 13 (operator -> MINUS .)
+    MINUS           shift and go to state 26
+    ASSIGN          shift and go to state 27
+
+
+state 15
+
+    (14) operator -> DIV .
+    (27) assignment_operators -> DIV . ASSIGN
+
+    INT_LITERAL     reduce using rule 14 (operator -> DIV .)
+    ASSIGN          shift and go to state 28
+
+
+state 16
+
+    (15) operator -> MUL .
+    (28) assignment_operators -> MUL . ASSIGN
+
+    INT_LITERAL     reduce using rule 15 (operator -> MUL .)
+    ASSIGN          shift and go to state 29
+
+
+state 17
+
+    (16) conditional_operators -> LT .
+    (19) conditional_operators -> LT . ASSIGN
+
+    INT_LITERAL     reduce using rule 16 (conditional_operators -> LT .)
+    ASSIGN          shift and go to state 30
+
+
+state 18
+
+    (17) conditional_operators -> GT .
+    (20) conditional_operators -> GT . ASSIGN
+
+    INT_LITERAL     reduce using rule 17 (conditional_operators -> GT .)
+    ASSIGN          shift and go to state 31
+
+
+state 19
+
+    (18) conditional_operators -> ASSIGN . ASSIGN
+
+    ASSIGN          shift and go to state 32
+
+
+state 20
+
+    (1) if_statement -> IF LPAREN expression RPAREN LBRACE . statement_list RBRACE
+    (2) statement_list -> . statement statement_list
+    (3) statement_list -> . statement
+    (4) statement -> . IDENTIFIER ASSIGN expression SEMI
+    (5) statement -> . IDENTIFIER assignment_operators SEMI
+    (6) statement -> . type IDENTIFIER SEMI
+    (7) statement -> . self_assignment_expression SEMI
+    (29) type -> . INT
+    (30) type -> . FLOAT
+    (21) self_assignment_expression -> . IDENTIFIER inc_dec_operators
+    (22) self_assignment_expression -> . IDENTIFIER assignment_operators INT_LITERAL
+
+    IDENTIFIER      shift and go to state 35
+    INT             shift and go to state 38
+    FLOAT           shift and go to state 39
+
+    statement_list                 shift and go to state 33
+    statement                      shift and go to state 34
+    type                           shift and go to state 36
+    self_assignment_expression     shift and go to state 37
+
+state 21
+
+    (9) expression -> IDENTIFIER operator INT_LITERAL .
+
+    RPAREN          reduce using rule 9 (expression -> IDENTIFIER operator INT_LITERAL .)
+    SEMI            reduce using rule 9 (expression -> IDENTIFIER operator INT_LITERAL .)
+
+
+state 22
+
+    (10) expression -> IDENTIFIER conditional_operators INT_LITERAL .
+
+    RPAREN          reduce using rule 10 (expression -> IDENTIFIER conditional_operators INT_LITERAL .)
+    SEMI            reduce using rule 10 (expression -> IDENTIFIER conditional_operators INT_LITERAL .)
+
+
+state 23
+
+    (22) self_assignment_expression -> IDENTIFIER assignment_operators INT_LITERAL .
+
+    RPAREN          reduce using rule 22 (self_assignment_expression -> IDENTIFIER assignment_operators INT_LITERAL .)
+    SEMI            reduce using rule 22 (self_assignment_expression -> IDENTIFIER assignment_operators INT_LITERAL .)
+
+
+state 24
+
+    (23) inc_dec_operators -> PLUS PLUS .
+
+    RPAREN          reduce using rule 23 (inc_dec_operators -> PLUS PLUS .)
+    SEMI            reduce using rule 23 (inc_dec_operators -> PLUS PLUS .)
+
+
+state 25
+
+    (25) assignment_operators -> PLUS ASSIGN .
+
+    INT_LITERAL     reduce using rule 25 (assignment_operators -> PLUS ASSIGN .)
+    SEMI            reduce using rule 25 (assignment_operators -> PLUS ASSIGN .)
+
+
+state 26
+
+    (24) inc_dec_operators -> MINUS MINUS .
+
+    RPAREN          reduce using rule 24 (inc_dec_operators -> MINUS MINUS .)
+    SEMI            reduce using rule 24 (inc_dec_operators -> MINUS MINUS .)
+
+
+state 27
+
+    (26) assignment_operators -> MINUS ASSIGN .
+
+    INT_LITERAL     reduce using rule 26 (assignment_operators -> MINUS ASSIGN .)
+    SEMI            reduce using rule 26 (assignment_operators -> MINUS ASSIGN .)
+
+
+state 28
+
+    (27) assignment_operators -> DIV ASSIGN .
+
+    INT_LITERAL     reduce using rule 27 (assignment_operators -> DIV ASSIGN .)
+    SEMI            reduce using rule 27 (assignment_operators -> DIV ASSIGN .)
+
+
+state 29
+
+    (28) assignment_operators -> MUL ASSIGN .
+
+    INT_LITERAL     reduce using rule 28 (assignment_operators -> MUL ASSIGN .)
+    SEMI            reduce using rule 28 (assignment_operators -> MUL ASSIGN .)
+
+
+state 30
+
+    (19) conditional_operators -> LT ASSIGN .
+
+    INT_LITERAL     reduce using rule 19 (conditional_operators -> LT ASSIGN .)
+
+
+state 31
+
+    (20) conditional_operators -> GT ASSIGN .
+
+    INT_LITERAL     reduce using rule 20 (conditional_operators -> GT ASSIGN .)
+
+
+state 32
+
+    (18) conditional_operators -> ASSIGN ASSIGN .
+
+    INT_LITERAL     reduce using rule 18 (conditional_operators -> ASSIGN ASSIGN .)
+
+
+state 33
+
+    (1) if_statement -> IF LPAREN expression RPAREN LBRACE statement_list . RBRACE
+
+    RBRACE          shift and go to state 40
+
+
+state 34
+
+    (2) statement_list -> statement . statement_list
+    (3) statement_list -> statement .
+    (2) statement_list -> . statement statement_list
+    (3) statement_list -> . statement
+    (4) statement -> . IDENTIFIER ASSIGN expression SEMI
+    (5) statement -> . IDENTIFIER assignment_operators SEMI
+    (6) statement -> . type IDENTIFIER SEMI
+    (7) statement -> . self_assignment_expression SEMI
+    (29) type -> . INT
+    (30) type -> . FLOAT
+    (21) self_assignment_expression -> . IDENTIFIER inc_dec_operators
+    (22) self_assignment_expression -> . IDENTIFIER assignment_operators INT_LITERAL
+
+    RBRACE          reduce using rule 3 (statement_list -> statement .)
+    IDENTIFIER      shift and go to state 35
+    INT             shift and go to state 38
+    FLOAT           shift and go to state 39
+
+    statement                      shift and go to state 34
+    statement_list                 shift and go to state 41
+    type                           shift and go to state 36
+    self_assignment_expression     shift and go to state 37
+
+state 35
+
+    (4) statement -> IDENTIFIER . ASSIGN expression SEMI
+    (5) statement -> IDENTIFIER . assignment_operators SEMI
+    (21) self_assignment_expression -> IDENTIFIER . inc_dec_operators
+    (22) self_assignment_expression -> IDENTIFIER . assignment_operators INT_LITERAL
+    (25) assignment_operators -> . PLUS ASSIGN
+    (26) assignment_operators -> . MINUS ASSIGN
+    (27) assignment_operators -> . DIV ASSIGN
+    (28) assignment_operators -> . MUL ASSIGN
+    (23) inc_dec_operators -> . PLUS PLUS
+    (24) inc_dec_operators -> . MINUS MINUS
+
+    ASSIGN          shift and go to state 42
+    PLUS            shift and go to state 44
+    MINUS           shift and go to state 45
+    DIV             shift and go to state 46
+    MUL             shift and go to state 47
+
+    assignment_operators           shift and go to state 43
+    inc_dec_operators              shift and go to state 11
+
+state 36
+
+    (6) statement -> type . IDENTIFIER SEMI
+
+    IDENTIFIER      shift and go to state 48
+
+
+state 37
+
+    (7) statement -> self_assignment_expression . SEMI
+
+    SEMI            shift and go to state 49
+
+
+state 38
+
+    (29) type -> INT .
+
+    IDENTIFIER      reduce using rule 29 (type -> INT .)
+
+
+state 39
+
+    (30) type -> FLOAT .
+
+    IDENTIFIER      reduce using rule 30 (type -> FLOAT .)
+
+
+state 40
+
+    (1) if_statement -> IF LPAREN expression RPAREN LBRACE statement_list RBRACE .
+
+    $end            reduce using rule 1 (if_statement -> IF LPAREN expression RPAREN LBRACE statement_list RBRACE .)
+
+
+state 41
+
+    (2) statement_list -> statement statement_list .
+
+    RBRACE          reduce using rule 2 (statement_list -> statement statement_list .)
+
+
+state 42
+
+    (4) statement -> IDENTIFIER ASSIGN . expression SEMI
+    (8) expression -> . INT_LITERAL
+    (9) expression -> . IDENTIFIER operator INT_LITERAL
+    (10) expression -> . IDENTIFIER conditional_operators INT_LITERAL
+    (11) expression -> . self_assignment_expression
+    (21) self_assignment_expression -> . IDENTIFIER inc_dec_operators
+    (22) self_assignment_expression -> . IDENTIFIER assignment_operators INT_LITERAL
+
+    INT_LITERAL     shift and go to state 5
+    IDENTIFIER      shift and go to state 6
+
+    expression                     shift and go to state 50
+    self_assignment_expression     shift and go to state 7
+
+state 43
+
+    (5) statement -> IDENTIFIER assignment_operators . SEMI
+    (22) self_assignment_expression -> IDENTIFIER assignment_operators . INT_LITERAL
+
+    SEMI            shift and go to state 51
+    INT_LITERAL     shift and go to state 23
+
+
+state 44
+
+    (25) assignment_operators -> PLUS . ASSIGN
+    (23) inc_dec_operators -> PLUS . PLUS
+
+    ASSIGN          shift and go to state 25
+    PLUS            shift and go to state 24
+
+
+state 45
+
+    (26) assignment_operators -> MINUS . ASSIGN
+    (24) inc_dec_operators -> MINUS . MINUS
+
+    ASSIGN          shift and go to state 27
+    MINUS           shift and go to state 26
+
+
+state 46
+
+    (27) assignment_operators -> DIV . ASSIGN
+
+    ASSIGN          shift and go to state 28
+
+
+state 47
+
+    (28) assignment_operators -> MUL . ASSIGN
+
+    ASSIGN          shift and go to state 29
+
+
+state 48
+
+    (6) statement -> type IDENTIFIER . SEMI
+
+    SEMI            shift and go to state 52
+
+
+state 49
+
+    (7) statement -> self_assignment_expression SEMI .
+
+    IDENTIFIER      reduce using rule 7 (statement -> self_assignment_expression SEMI .)
+    INT             reduce using rule 7 (statement -> self_assignment_expression SEMI .)
+    FLOAT           reduce using rule 7 (statement -> self_assignment_expression SEMI .)
+    RBRACE          reduce using rule 7 (statement -> self_assignment_expression SEMI .)
+
+
+state 50
+
+    (4) statement -> IDENTIFIER ASSIGN expression . SEMI
+
+    SEMI            shift and go to state 53
+
+
+state 51
+
+    (5) statement -> IDENTIFIER assignment_operators SEMI .
+
+    IDENTIFIER      reduce using rule 5 (statement -> IDENTIFIER assignment_operators SEMI .)
+    INT             reduce using rule 5 (statement -> IDENTIFIER assignment_operators SEMI .)
+    FLOAT           reduce using rule 5 (statement -> IDENTIFIER assignment_operators SEMI .)
+    RBRACE          reduce using rule 5 (statement -> IDENTIFIER assignment_operators SEMI .)
+
+
+state 52
+
+    (6) statement -> type IDENTIFIER SEMI .
+
+    IDENTIFIER      reduce using rule 6 (statement -> type IDENTIFIER SEMI .)
+    INT             reduce using rule 6 (statement -> type IDENTIFIER SEMI .)
+    FLOAT           reduce using rule 6 (statement -> type IDENTIFIER SEMI .)
+    RBRACE          reduce using rule 6 (statement -> type IDENTIFIER SEMI .)
+
+
+state 53
+
+    (4) statement -> IDENTIFIER ASSIGN expression SEMI .
+
+    IDENTIFIER      reduce using rule 4 (statement -> IDENTIFIER ASSIGN expression SEMI .)
+    INT             reduce using rule 4 (statement -> IDENTIFIER ASSIGN expression SEMI .)
+    FLOAT           reduce using rule 4 (statement -> IDENTIFIER ASSIGN expression SEMI .)
+    RBRACE          reduce using rule 4 (statement -> IDENTIFIER ASSIGN expression SEMI .)
+
